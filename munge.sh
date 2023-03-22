@@ -16,3 +16,13 @@ wc -l tokens.txt
 
 # frequency of stitches
 for f in $(cat tokens.txt);do echo -n '$f,';grep -c $f stitchmaps-munged.txt;done|sort -rgk2 > stitch-freqs.csv
+
+# stitches outside top 100
+# used in only 304 patterns (0.3%)
+cut -d, -f1 stitch-freqs.csv | tail -n+101 > rare.txt
+grep -cf rare.txt stitchmaps-munged.txt
+
+# stitches outside top 50
+# used in 1187 patterns (13%)
+cut -d, -f1 stitch-freqs.csv | tail -n+51 > uncommon.txt
+grep -cf uncommon.txt stitchmaps-munged.txt(base)
